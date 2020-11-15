@@ -33,9 +33,9 @@ public class ${className}Controller {
 
     /**
      * 列表
+     * @RequiresPermissions("${moduleName}:${pathName}:list")
      */
     @RequestMapping("/list")
-    @RequiresPermissions("${moduleName}:${pathName}:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = ${classname}Service.queryPage(params);
 
@@ -45,45 +45,41 @@ public class ${className}Controller {
 
     /**
      * 信息
+     * //@RequiresPermissions("${moduleName}:${pathName}:info")
      */
     @RequestMapping("/info/{${pk.attrname}}")
-    @RequiresPermissions("${moduleName}:${pathName}:info")
     public R info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
-		${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
-
+		${className}Entity ${classname} = ${classname}Service.getEntityById(${pk.attrname});
         return R.ok().put("${classname}", ${classname});
     }
 
     /**
      * 保存
+     * @RequiresPermissions("${moduleName}:${pathName}:save")
      */
     @RequestMapping("/save")
-    @RequiresPermissions("${moduleName}:${pathName}:save")
     public R save(@RequestBody ${className}Entity ${classname}){
-		${classname}Service.save(${classname});
-
+		${classname}Service.saveEntity(${classname});
         return R.ok();
     }
 
     /**
      * 修改
+     * @RequiresPermissions("${moduleName}:${pathName}:update")
      */
     @RequestMapping("/update")
-    @RequiresPermissions("${moduleName}:${pathName}:update")
     public R update(@RequestBody ${className}Entity ${classname}){
-		${classname}Service.updateById(${classname});
-
+		${classname}Service.updateEntityById(${classname});
         return R.ok();
     }
 
     /**
      * 删除
+     * @RequiresPermissions("${moduleName}:${pathName}:delete")
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("${moduleName}:${pathName}:delete")
     public R delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
-		${classname}Service.removeByIds(Arrays.asList(${pk.attrname}s));
-
+		${classname}Service.removeEntityBatchIds(Arrays.asList(${pk.attrname}s));
         return R.ok();
     }
 

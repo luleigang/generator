@@ -1,10 +1,15 @@
 package ${package}.${moduleName}.service.impl;
-
+import io.renren.datasources.DataSourceNames;
+import io.renren.datasources.annotation.DataSource;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import ${mainPath}.common.utils.PageUtils;
 import ${mainPath}.common.utils.Query;
 
@@ -17,13 +22,38 @@ import ${package}.${moduleName}.service.${className}Service;
 public class ${className}ServiceImpl extends ServiceImpl<${className}Dao, ${className}Entity> implements ${className}Service {
 
     @Override
+    @DataSource(name = DataSourceNames.NATIVE)
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<${className}Entity> page = this.page(
-                new Query<${className}Entity>().getPage(params),
-                new QueryWrapper<${className}Entity>()
+        Page<${className}Entity> page = this.selectPage(
+                new Query<${className}Entity>(params).getPage(),
+                new EntityWrapper<${className}Entity>()
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    @DataSource(name = DataSourceNames.NATIVE)
+    public ${className}Entity getEntityById(Integer id) {
+        return selectById(id);
+    }
+
+    @Override
+    @DataSource(name = DataSourceNames.NATIVE)
+    public boolean saveEntity(${className}Entity entity) {
+        return insert(entity);
+    }
+
+    @Override
+    @DataSource(name = DataSourceNames.NATIVE)
+    public boolean updateEntityById(${className}Entity entity) {
+        return updateById(entity);
+    }
+
+    @Override
+    @DataSource(name = DataSourceNames.NATIVE)
+    public boolean removeEntityBatchIds(Collection<? extends Serializable> idList) {
+        return deleteBatchIds(idList);
     }
 
 }

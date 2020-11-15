@@ -57,7 +57,8 @@ public class GenUtils {
         tableEntity.setTableName(table.get("tableName" ));
         tableEntity.setComments(table.get("tableComment" ));
         //表名转换成Java类名
-        String className = tableToJava(tableEntity.getTableName(), config.getString("tablePrefix" ));
+       // String className = tableToJava(tableEntity.getTableName(), config.getString("tablePrefix" ));
+        String className = tableEntity.getTableName();
         tableEntity.setClassName(className);
         tableEntity.setClassname(StringUtils.uncapitalize(className));
 
@@ -71,7 +72,9 @@ public class GenUtils {
             columnEntity.setExtra(column.get("extra" ));
 
             //列名转换成Java属性名
-            String attrName = columnToJava(columnEntity.getColumnName());
+            //String attrName = columnToJava(columnEntity.getColumnName());
+            String attrName =columnEntity.getColumnName();
+            //String attrName = generateHumpAttr(columnEntity.getColumnName());
             columnEntity.setAttrName(attrName);
             columnEntity.setAttrname(StringUtils.uncapitalize(attrName));
 
@@ -145,6 +148,23 @@ public class GenUtils {
      */
     public static String columnToJava(String columnName) {
         return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "" );
+    }
+
+    private static String generateHumpAttr(String columnName) {
+// 生成驼峰并替换掉下划线
+        return WordUtils.uncapitalize(WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", ""));
+    }
+
+    /**
+     * 首字母转小写
+     * @param s
+     * @return
+     */
+    public static String toLowerCaseFirstOne(String s){
+        if(Character.isLowerCase(s.charAt(0)))
+            return s;
+        else
+            return (new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)).toString();
     }
 
     /**
