@@ -7,7 +7,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     #MySQL配置
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://118.178.124.128:8590;databaseName=RYTreasureDB
+    url: jdbc:sqlserver://47.99.152.16:8590;databaseName=RYAccountsDB
     username: yinduqpdb
     password: Yindu123
     #oracle配置
